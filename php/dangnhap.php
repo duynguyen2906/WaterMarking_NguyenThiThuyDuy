@@ -16,8 +16,9 @@ ini_set('display_errors',0);
 include('config.php');
 if(isset($_POST['user'])&&isset($_POST['pass']))
 {
-	$user = $_POST['user'];
-	$pass = ($_POST['pass']);
+	$user = addslashes($_POST['user']);
+	//$pass = ($_POST['pass']);
+	$pass=sha1(md5(md5(addslashes($_POST['pass']))));
 	$sql = "select * from user where username='$user' and password='$pass'";
 	//echo $user;
 	//echo $pass;

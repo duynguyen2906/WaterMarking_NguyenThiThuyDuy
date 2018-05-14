@@ -38,8 +38,9 @@ ini_set('display_errors',0);
 
 include('config.php');
 
-$user = $_POST['user'];
-$pass = ($_POST['pass']);
+$user = addslashes($_POST['user']);
+//$pass = ($_POST['pass']);
+$pass=sha1(md5(md5(addslashes($_POST['pass']))));
 $result = mysqli_query($con, "select * from user where username='$user' ");
 $n = mysqli_num_rows($result);
 
