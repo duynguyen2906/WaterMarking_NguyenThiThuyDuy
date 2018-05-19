@@ -1,4 +1,4 @@
-<?php include('process2.php');?>
+<?php include('process.php');?>
 <form style="margin-left:10px; margin-right:10px;" action="" method="post" enctype="multipart/form-data">
 				<input style="padding-left:10px; display:block" id="upfile-song" name="upfilesong" type="text" placeholder="Song" /> 
 				<input style="padding-left:10px; display:block" id="upfile-song" name="upfilesinger" type="text" placeholder="Singer" /> <br>

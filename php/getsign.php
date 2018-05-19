@@ -1,4 +1,4 @@
-<?php include_once('process2.php');?>
+<?php include_once('process.php');?>
 
 <form style="margin-left:10px; margin-right:10px;" action="" method="post" enctype="multipart/form-data" >
                 <input id="upfile-input-file" name="upfile" type="file" accept='audio/wav' style="display: none;"/>

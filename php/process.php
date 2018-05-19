@@ -5,66 +5,7 @@
 		session_start();
 		include "config.php";
 
-		class WavFile{
-			private static $HEADER_LENGTH = 44;
-
-			public static function ReadFile($filename) {
-	            $filesize = filesize($filename);
-	            if ($filesize<self::$HEADER_LENGTH)
-	                return false;           
-	            $handle = fopen($filename, 'rb');
-	            $wav = array(
-	                    'header'    => array(
-	                        'chunkid'       => self::readString($handle, 4),
-	                        'chunksize'     => self::readLong($handle),
-	                        'format'        => self::readString($handle, 4)
-	                        ),
-	                    'subchunk1' => array(
-	                        'id'            => self::readString($handle, 4),
-	                        'size'          => self::readLong($handle),
-	                        'audioformat'   => self::readWord($handle),
-	                        'numchannels'   => self::readWord($handle),
-	                        'samplerate'    => self::readLong($handle),
-	                        'byterate'      => self::readLong($handle),
-	                        'blockalign'    => self::readWord($handle),
-	                        'bitspersample' => self::readWord($handle)
-	                        ),
-	                    'subchunk2' => array( 
-	                        'id'            => self::readString($handle, 4),
-	                        'size'			=> self::readLong($handle),
-	                        'data'          => null
-	                        ),
-	                    'subchunk3' => array(
-	                    	'id'			=> null,
-	                    	'size'			=> null,
-	                        'data'          => null
-	                        )
-	                    );
-	            $wav['subchunk2']['data'] = fread($handle, $wav['subchunk2']['size']);
-	            $wav['subchunk3']['id'] = self::readString($handle, 4);
-	            $wav['subchunk3']['size'] = self::readLong($handle);
-				$wav['subchunk3']['data'] = fread($handle, $wav['subchunk3']['size']);
-	            fclose($handle);
-	            return $wav;
-		    }
-
-		    private static function readString($handle, $length) {
-		        return self::readUnpacked($handle, 'a*', $length);
-		    }
-
-		    private static function readLong($handle) {
-		        return self::readUnpacked($handle, 'V', 4);
-		    }
-
-		    private static function readWord($handle) {
-		        return self::readUnpacked($handle, 'v', 2);
-		    }
-
-		    private static function readUnpacked($handle, $type, $length) {
-		        $r = unpack($type, fread($handle, $length));
-		        return array_pop($r);
-		    }
-		}
+		include "wav.php";
 
 		if(isset($_POST['upfilebtn'])){
 			$fileName = $_FILES["upfile"]["tmp_name"];
@@ -101,7 +42,7 @@
 			
 			if (($_SESSION['user']) == "admin"){
 
-				if(isset($_POST['upfilebtn1']) && isset($_POST['upfilesinger']) && isset($_POST['upfilesong'])){
+				if(isset($_POST['upfilebtn1']) ){
 					$fileName = $_FILES["upfile1"]["tmp_name"];
 					$fileType = strtolower($_FILES['upfile1']['type']);
 
