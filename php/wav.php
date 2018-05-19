@@ -1,8 +1,7 @@
 		
-		class WavFile{
-		private static $HEADER_LENGTH = 44;
-
-		public static function ReadFile($filename) {
+class WavFile{
+	private static $HEADER_LENGTH = 44;
+	public static function ReadFile($filename) {
             $filesize = filesize($filename);
             if ($filesize<self::$HEADER_LENGTH)
                 return false;           
