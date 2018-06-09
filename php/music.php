@@ -12,7 +12,7 @@ $result = mysqli_query($con, "select * from music where owner = 'admin' order by
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
+<title></title>
 </head>
 
 <body>
@@ -39,25 +39,25 @@ $result = mysqli_query($con, "select * from music where owner = 'admin' order by
   <table class="w3-table-all">
     <thead>
       <tr class="w3-light-grey w3-hover-red">
-        <th>Song</th>
-        <th>Singer</th>
-        <th>Status</th>
+        <th style="text-align:center">Song</th>
+        <th style="text-align:center">Singer</th>
+        <th style="text-align:center">Status</th>
       </tr>
     </thead>
     <?php
 	while($row = mysqli_fetch_array($result)){?>
     <tr class="w3-hover-green">
-    	<td><?php echo $row['name']?></td>
-		<td><?php echo $row['singer']?></td>
-		<td><?php if ($_SESSION['user'] == "") 
-				  	echo '<a href="index.php?act=dn">LOGIN</a>';
+    	<td style="text-align:center" ><?php echo $row['name']?></td>
+		<td style="text-align:center"><?php echo $row['singer']?></td>
+		<td style="text-align:center"><?php if ($_SESSION['user'] == "") 
+				  	echo '<a href="index.php?act=dn"> PLEASE LOGIN</a>';
 					else{
-					$result2 = mysqli_query($con, "select * from music where owner = '" . $_SESSION['user'] .  "' and parentid = '" . $row['id'] . "' limit 1;");
+					$result2 = mysqli_query($con, "select * from music where owner = '".$_SESSION['user']."' and parentid = '". $row['id']."' limit 1;");
 					$row2 = mysqli_fetch_array($result2);
 					if ($row2['owner']==$_SESSION['user'])
 						{echo 'Owned';}
 						else{
-							echo "<button id=\"" . $row['id'] . "\" class=\"btn btn-danger btn-mini btnbuysong\"><i class=\"fa fa-shopping-cart\"></i></button>";}
+							echo "<button id=\"".$row['id']."\" class=\"btn btn-danger btn-mini btnbuysong\"><i class=\"fa fa-shopping-cart\"></i></button>";}
 							}
 
 					?></td>
@@ -82,11 +82,11 @@ $result = mysqli_query($con, "select * from music where owner = 'admin' order by
 				data: { buysongid : buysongid },
 				success : function(response){
 					$("*").css("cursor", "default");
-					if (response == "buy success"){
+					if (response == "success"){
 					  alert("BUY SUCCESS");
 					  window.location="";
 					}
-					else if (response == "buy failure"){
+					else if (response == "error"){
 					  alert("OOPS!");
 					  window.location="";
 					}

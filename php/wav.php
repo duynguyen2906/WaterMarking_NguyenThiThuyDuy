@@ -1,31 +1,31 @@
-		
-class WavFile{
-	private static $HEADER_LENGTH = 44;
-	public static function ReadFile($filename) {
+<?php class WavFile{
+		private static $HEADER_LENGTH = 44;
+
+		public static function ReadFile($filename) {
             $filesize = filesize($filename);
             if ($filesize<self::$HEADER_LENGTH)
                 return false;           
             $handle = fopen($filename, 'rb');
             $wav = array(
                 'header'    => array(
-                    'chunkid'       => self::readString($handle, 4),
+                    'chunkid'       => self::readString($handle, 4), // "RIFF"
                     'chunksize'     => self::readLong($handle),
-                    'format'        => self::readString($handle, 4)
+                    'format'        => self::readString($handle, 4) // "WAVE"
                     ),
                 'subchunk1' => array(
-                    'id'            => self::readString($handle, 4),
+                    'id'            => self::readString($handle, 4), //"fmt "
                     'size'          => self::readLong($handle),
                     'audioformat'   => self::readWord($handle),
-                    'numchannels'   => self::readWord($handle),
+                    'numchannels'   => self::readWord($handle), // 1/2
                     'samplerate'    => self::readLong($handle),
                     'byterate'      => self::readLong($handle),
                     'blockalign'    => self::readWord($handle),
-                    'bitspersample' => self::readWord($handle)
+                    'bitspersample' => self::readWord($handle) // 1/2/4...
                     ),
                 'subchunk2' => array( 
-                    'id'            => self::readString($handle, 4),
+                    'id'            => self::readString($handle, 4), //"data"
                     'size'			=> self::readLong($handle),
-                    'data'          => null
+                    'data'          => null //data sound
                     ),
                 'subchunk3' => array(
                 	'id'			=> null,
@@ -33,8 +33,8 @@ class WavFile{
                     'data'          => null
                     )
                 );
-            $wav['subchunk2']['data'] = fread($handle, $wav['subchunk2']['size']);
-            $wav['subchunk3']['id'] = self::readString($handle, 4);
+            $wav['subchunk2']['data'] = fread($handle, $wav['subchunk2']['size']); // fread(file,lenght) => byte
+            $wav['subchunk3']['id'] = self::readString($handle, 4); 
             $wav['subchunk3']['size'] = self::readLong($handle);
 			$wav['subchunk3']['data'] = fread($handle, $wav['subchunk3']['size']);
             fclose($handle);
@@ -95,3 +95,4 @@ class WavFile{
 	        fwrite($handle, pack($type, $string));
 	    }
 	}
+?>

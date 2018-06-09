@@ -22,17 +22,17 @@ $n = mysqli_num_rows($result);
 	<table class="w3-table-all">
     <thead>
       <tr class="w3-light-grey w3-hover-red">
-        <th>Name Song</th>
-        <th>Singer</th>
-        <th>Download</th>
+        <th style="text-align:center">Name Song</th>
+        <th style="text-align:center" >Singer</th>
+        <th style="text-align:center">Download</th>
       </tr>
     </thead>
     <?php
 	while($row = mysqli_fetch_array($result)){?>
     <tr class="w3-hover-green">
-    	<td><?php echo $row["name"]?></td>
-		<td><?php echo $row["singer"]?></td>
-		<td><a href="<?php echo $row['url']?>" ><i class="fa fa-download"></i></a></td>
+    	<td style="text-align:center"><?php echo $row["name"]?></td>
+		<td style="text-align:center"><?php echo $row["singer"]?></td>
+		<td style="text-align:center"><a href="<?php echo $row['url']?>" target='_blank'><i class="fa fa-download"></i></a></td>
       <!--  <audio controls="controls">
     <source src="https://docs.google.com/uc?export=download&id=<?php echo $row['url']?>">
 </audio> -->
@@ -43,7 +43,7 @@ $n = mysqli_num_rows($result);
   </table>
   <?php }
   	else
-	{echo '<h1 style="text-align:center; ">Please buy any  <a href="index.php">SONG</a></h1>';}
+	{echo '<h1 style="text-align:center; ">Please <a href="index.php">buy</a> any song </h1>';}
   ?>
 </div>           
 

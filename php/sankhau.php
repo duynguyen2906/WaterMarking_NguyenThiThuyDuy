@@ -1,6 +1,5 @@
 <?php
 $act = $_GET['act'];
-
 if ($act=="")
 	include ('music.php');
 else if ($act=="dn")
